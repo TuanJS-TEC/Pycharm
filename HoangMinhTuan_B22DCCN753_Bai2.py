@@ -1,36 +1,43 @@
-def LIQ(arr):
-    n = len(arr)
-    dp = [1] * n
-    prev = [-1] * n
-    a = [[] for _ in range(n)]
-    max_length = 0
+def tim_day_con_tang_dai_nhat(mang):
 
-    # đây là đoạn truy vết
-    for i in range(n):
-        a[i] = [arr[i]]
-        for j in range(i):
-            if arr[j] < arr[i] and dp[i] < dp[j] + 1:
-                dp[i] = dp[j] + 1
-                a[i] = a[j] + [arr[i]]
-        max_length = max(max_length, dp[i])
-
-    result = [sub for sub in a if len(sub) == max_length]
-    return max_length, result
+  n = len(mang)
+  do_dai_day_con_tang = [1] * n
+  phan_tu_truoc = [-1] * n
+  cac_day_con_tang = [[] for _ in range(n)]
+  do_dai_lon_nhat = 0
 
 
-def remove(arr):
-    length_of_lis, lis_sequences = LIQ(arr)
-    min_k = len(arr) - length_of_lis
-    return min_k, lis_sequences
+  for i in range(n):
+    cac_day_con_tang[i] = [mang[i]]
+    for j in range(i):
+
+      if mang[j] < mang[i] and do_dai_day_con_tang[i] < do_dai_day_con_tang[j] + 1:
+        do_dai_day_con_tang[i] = do_dai_day_con_tang[j] + 1
+        cac_day_con_tang[i] = cac_day_con_tang[j] + [mang[i]]
+    do_dai_lon_nhat = max(do_dai_lon_nhat, do_dai_day_con_tang[i])
 
 
-N = int(input())
-arr = list(map(float, input().split(',')))
+  ket_qua = [day_con for day_con in cac_day_con_tang if len(day_con) == do_dai_lon_nhat]
+  return do_dai_lon_nhat, ket_qua
 
-min_k, result = remove(arr)
 
-res = [[int(num) if num.is_integer() else num for num in seq] for seq in result]
+def loai_bo(mang):
+  do_dai_day_con_tang, cac_day_con_tang = tim_day_con_tang_dai_nhat(mang)
+  k_toi_thieu = len(mang) - do_dai_day_con_tang
+  return k_toi_thieu, cac_day_con_tang
 
-print(f"K = {min_k}")
-for seq in res:
-    print(seq)
+
+
+N = int(input("Nhập số lượng phần tử: "))
+mang = list(map(float, input("Nhập mảng, cách nhau bởi dấu phẩy: ").split(',')))
+
+
+k_toi_thieu, ket_qua = loai_bo(mang)
+
+
+ket_qua_chinh_sua = [[int(so) if so.is_integer() else so for so in day_con] for day_con in ket_qua]
+
+
+print(f"K = {k_toi_thieu}")
+for day_con in ket_qua_chinh_sua:
+  print(day_con)

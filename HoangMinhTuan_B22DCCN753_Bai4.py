@@ -1,26 +1,37 @@
 import matplotlib.pyplot as plt
 
-def word_frequency(text):
 
-  words = text.lower().split()
-  word_freq = {}
-  for word in words:
-    word_freq[word] = word_freq.get(word, 0) + 1
-  sorted_words = sorted(word_freq.items(), key=lambda item: item[1], reverse=True)
-  return word_freq, sorted_words
+def tan_suat_tu(van_ban):
 
-def plot_histogram(sorted_words):
+  cac_tu = van_ban.lower().split()
 
-  top_words = dict(sorted_words[:10])
-  plt.bar(top_words.keys(), top_words.values())
-  plt.title("10 most frequent tokens in description")
-  plt.xlabel("Words")
-  plt.ylabel("Frequency")
+
+  tan_suat = {}
+  for tu in cac_tu:
+    tan_suat[tu] = tan_suat.get(tu, 0) + 1
+
+
+  tu_sap_xep = sorted(tan_suat.items(), key=lambda item: item[1], reverse=True)
+  return tan_suat, tu_sap_xep
+
+
+def ve_bieu_do(tu_sap_xep):
+
+  top_tu = dict(tu_sap_xep[:10])
+
+
+  plt.bar(top_tu.keys(), top_tu.values())
+  plt.title("10 từ xuất hiện nhiều nhất")
+  plt.xlabel("Từ")
+  plt.ylabel("Tần suất")
   plt.show()
 
 
-text = input("Nhập một đoạn văn bản: ")
+
+van_ban = input("Nhập một đoạn văn bản: ")
 
 
-word_freq, sorted_words = word_frequency(text)
-plot_histogram(sorted_words)
+tan_suat, tu_sap_xep = tan_suat_tu(van_ban)
+
+
+ve_bieu_do(tu_sap_xep)
